@@ -1,0 +1,66 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: lightgray !important;
+}
+.user_card {
+    width: 650px;
+    margin-top: auto;
+    margin-inline-start: 2px;
+    margin-bottom: auto;
+    background: #2d3436;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px !important;
+
+}
+
+.form_container {
+    margin-top: 20px;
+}
+
+#form-title{
+    color: #fff;
+}
+.login_btn {
+    width: 100%;
+    background: #2d3436 !important;
+    color: rgb(32, 167, 59) !important;
+    border-color: rgb(32, 167, 59);
+}
+.login_btn:hover {
+    background:rgb(32, 167, 59) !important;
+    color: white !important;
+}
+.login_container {
+    padding: 0 2rem;
+}
+.input-group-text {
+    background: rgb(139, 139, 139) !important;
+    color: white !important;
+    border: 0 !important;
+    border-radius: 0.25rem 0 0 0.25rem !important;
+}
+.input_user,
+.input_pass:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+#logsign {
+    text-decoration: none; 
+    color: rgb(32, 167, 59);
+}
+
+#logsign a:hover {
+    color: green;
+    font-weight: bolder;
+}

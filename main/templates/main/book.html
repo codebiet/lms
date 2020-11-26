@@ -1,0 +1,87 @@
+{% extends "main/index.html" %}
+{% load static %}
+
+{% block title %}Books{% endblock %}
+
+{% block main-content %}
+<center>
+    <h1 class = "py-2" style="color:#2d3436; background-color:lightgray">Welcome To Books Panel</h1>
+</center>
+
+<div>
+    <p><h3 style="color:#2d3436; background-color:#ffffff;">Recommended></h3></p>
+</div>
+
+
+
+<div class="container">
+    <div class="row">
+
+        {% for bk in book %}
+        
+        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
+            <a href="#" style="text-decoration: none; color:#2d3436;">
+                <img src="{{bk.image.url}}" height="150" width="160" alt="{{bk.name}}" title="{{bk.name}}"/>
+                <h5>{{bk.name}}</h5>
+                <h6>{{bk.author}}</h6>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
+            <a href="#" style="text-decoration: none; color:#2d3436;">
+                <img src="{{bk.image.url}}" height="150" width="160" alt="{{bk.name}}" title="{{bk.name}}"/>
+                <h5>{{bk.name}}</h5>
+                <h6>{{bk.author}}</h6>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
+            <a href="#" style="text-decoration: none; color:#2d3436;">
+                <img src="{{bk.image.url}}" height="150" width="160" alt="{{bk.name}}" title="{{bk.name}}"/>
+                <h5>{{bk.name}}</h5>
+                <h6>{{bk.author}}</h6>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
+            <a href="#" style="text-decoration: none; color:#2d3436;">
+                <img src="{{bk.image.url}}" height="150" width="160" alt="{{bk.name}}" title="{{bk.name}}"/>
+                <h5>{{bk.name}}</h5>
+                <h6>{{bk.author}}</h6>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
+            <a href="#" style="text-decoration: none; color:#2d3436;">
+                <img src="{{bk.image.url}}" height="150" width="160" alt="{{bk.name}}" title="{{bk.name}}"/>
+                <h5>{{bk.name}}</h5>
+                <h6>{{bk.author}}</h6>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
+            <a href="#" style="text-decoration: none; color:#2d3436;">
+                <img src="{{bk.image.url}}" height="150" width="160" alt="{{bk.name}}" title="{{bk.name}}"/>
+                <h5>{{bk.name}}</h5>
+                <h6>{{bk.author}}</h6>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
+            <a href="#" style="text-decoration: none; color:#2d3436;">
+                <img src="{{bk.image.url}}" height="150" width="160" alt="{{bk.name}}" title="{{bk.name}}"/>
+                <h5>{{bk.name}}</h5>
+                <h6>{{bk.author}}</h6>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
+            <a href="#" style="text-decoration: none; color:#2d3436;">
+                <img src="{{bk.image.url}}" height="150" width="160" alt="{{bk.name}}" title="{{bk.name}}"/>
+                <h5>{{bk.name}}</h5>
+                <h6>{{bk.author}}</h6>
+            </a>
+        </div>
+        
+        
+        
+        
+        {% endfor %}
+    </div>
+</div>
+        
+
+{% endblock %}
