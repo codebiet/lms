@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from main.models import book, pdf
-from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
+from account.models import Account
+
+
 
 def index(request):
     return render(request, 'main/index.html')
@@ -18,38 +21,39 @@ def pdf_col(request):
     pdf_display = pdf.objects.all()
     return render(request, 'main/pdf.html', {'pdf':pdf_display})
 
+
+
 def signup(request):
     if request.user.is_authenticated:
         return redirect('index')
     else:
         form = CreateUserForm()
-
         if request.method == 'POST':
             form = CreateUserForm(request.POST)
             if form.is_valid():
-                form.save()
-                user = form.cleaned_data.get('username')
-                messages.success(request, "Account was created for " + user)
+                user = form.save()
+                email = form.cleaned_data.get('email')
+                messages.success(request, "Account was created for " + 'email')
 
                 return redirect('login')
-
-        return render(request, 'main/signup.html', {'form':form})
+        context = {'form': form}
+        return render(request, 'main/signup.html', context)
 
 def loginPg(request):
     if request.user.is_authenticated:
         return redirect('index')
     else:
         if request.method == 'POST':
-            username = request.POST.get('username')
+            email = request.POST.get('email')
             password = request.POST.get('password')
 
-            user = authenticate(request, username = username, password = password)
+            user = authenticate(request, email = email, password = password)
 
             if user is not None:
                 login(request, user)
                 return redirect('index')
             else:
-                messages.info(request, 'Username OR Password is incorrect')
+                messages.info(request, 'Email OR Password is incorrect')
 
         return render(request, 'main/login.html')
 

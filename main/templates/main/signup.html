@@ -31,12 +31,7 @@
 							</div>
 							{{form.last_name}}
 						</div>
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
-							</div>
-							{{form.username}}
-						</div>
+						
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
@@ -53,9 +48,18 @@
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
 							</div>
-							{{form.areas_of_interest}}
+							{{form.branch}}
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
+							</div>
+							{{form.year}}
 						</div>
-						
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-key"></i></span>
+							</div>
+							<div class="form-control" style="display: inline-flex;">{{form.areas_of_interest}}</div>
+						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
@@ -95,10 +99,9 @@
       form_fields[2].placeholder='First Name...';
       form_fields[3].placeholder='Last Name...';
       form_fields[4].placeholder='Roll No...';
-	  form_fields[5].placeholder='Username...';
-		form_fields[6].placeholder='Email...';
-		form_fields[7].placeholder='Enter password...';
-		form_fields[8].placeholder='Re-enter Password...';
+		form_fields[5].placeholder='Email...';
+		form_fields[6].placeholder='Enter password...';
+		form_fields[7].placeholder='Re-enter Password...';
 
 
 		for (var field in form_fields){	
