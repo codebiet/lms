@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<nav class="navbar fixed-top navbar-expand-md mr-0" >
+<nav class="navbar navbar-expand-md mr-0" >
     <a class="navbar-brand ml-5" href="{% url 'index' %}" style="font-family: Georgia, 'Times New Roman', Times, serif;">BIET Library</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon fas fa-bars"></span>
@@ -27,8 +27,16 @@
             <button class="btn btn-outline-success my-1 my-sm-0" type="submit">Search</button>
         </form>
         <ul class="navbar-nav ml-lg-auto ml-0 mr-lg-5">
-            <li class="nav-item"><a class="nav-link" href="{% url 'authenticate' %}">SignUp/Login</a></li>
+            {% if not request.user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">SignUp</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="#">Hello, {{request.user}}</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+            {% endif %}
         </ul>
+        
     </div>
 </nav>
 

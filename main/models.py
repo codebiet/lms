@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from multiselectfield import MultiSelectField
 import datetime
 
 YEAR_CHOICES = []
@@ -21,7 +23,6 @@ class pdf(models.Model):
     publication=models.CharField(max_length=100)
     edition=models.IntegerField(('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
     description=models.TextField(max_length=500)
-
 
 
 

@@ -10,3 +10,4 @@ class PDFsAdmin(admin.ModelAdmin):
 admin.site.register(book, BooksAdmin)
 admin.site.register(pdf, PDFsAdmin)
 
+
