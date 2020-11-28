@@ -1,0 +1,33 @@
+{% extends "main/index.html" %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+
+{% block main-content %}
+
+<div class="container-fluid" style="max-width: 100;">
+    <img src="{{ user.cover_image.url }}" class="img-fluid" style="max-width: 100%;height: 250px; overflow-x: hidden;">
+</div>                
+<div class="container" style="margin: 0;">
+    <div class="row media">
+        <div class="col-6 col-md-4 mt-2 text-center" style="float: left; overflow-x: hidden;">
+            <img src="{{ user.profile_image.url }}" class="mr-3 mt-3 rounded-circle" width="70%" height="70%">
+            <button type="button" class="btn btn-primary, btn block, btn-lg mt-4"><strong>Change Password</strong></button>
+        </div>
+        <div class="col-12 col-md-8 my-5 media-body" style="overflow-x: hidden">
+            <div class="container-fluid" style="vertical-align: middle;">
+                <h4 class="text-primary">NAME: {{ user.first_name }} {{ user.last_name }}</h4>
+                <h4 class="text-primary">ROLL NO.: {{ user.roll_no }}</h4>
+                <h4 class="text-primary">BRANCH: {{ user.branch }}</h4>
+                <h4 class="text-primary">YEAR: {{ user.year }}</h4>
+                <h4 class="text-primary">EMAIL ID: {{ user.email }}</h4>
+                <h4 class="text-primary mb-2">NO. OF BOOKS ISSUED: 5</h4>
+            
+                <button type="button" class="btn btn-primary, btn block, btn-lg mt-4">Book Issue</button>
+                <button type="button" class="btn btn-primary, btn block, btn-lg mt-4">Upload PDF</button>
+            </div>
+        </div> 
+       
+    </div>
+</div>
+{% endblock %}

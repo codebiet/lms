@@ -39,7 +39,13 @@ def get_profile_image_filepath(self):
     return f'profile_images/{self.pk}/{"profile_image.png"}'
 
 def get_default_profile_image():
-    return "main\static\main\img\bks.jpg"
+    return "main/static/main/img/default_img.jpg"
+
+def get_cover_image_filepath(self):
+    return f'cover_images/{self.pk}/{"cover_image.png"}'
+
+def get_default_cover_image():
+    return "main/static/main/img/bat_cover.jpg"
 
 class Account(AbstractBaseUser):
 
@@ -67,6 +73,7 @@ class Account(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     profile_image = models.ImageField(max_length=255, upload_to =get_profile_image_filepath , null=True, blank=True, default= get_default_profile_image)
+    cover_image = models.ImageField(max_length=255, upload_to =get_cover_image_filepath , null=True, blank=True, default= get_default_cover_image)
     hide_email = models.BooleanField(default=True)
 
     objects = MyAccountManager()

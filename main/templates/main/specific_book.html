@@ -1,0 +1,39 @@
+{% extends "main/index.html" %}
+{% load static %}
+
+{% block title %}Books{% endblock %}
+
+{% block main-content %}
+        
+    <center>
+        <div class="container" style="margin:25px; ">
+            <div class="row media">
+                <div class="col-6 col-md-4" style="float: left; overflow-x: hidden;">
+                    <img src="{{ bk_pg.image.url }}" class ="img-fluid rounded align-self-start mr-3" alt="Responsive Image" title="Book Image" height="450px" width="300px"/>
+                    
+                    <center>
+                        <h3 class="text-danger">Rate Me: </h3>
+                        <span class="fa fa-star checked "></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </center>
+                </div>
+                <div class="col-12 col-md-8 media-body" style="overflow-x: hidden;">
+                    <h5 class="text-info mt-0"><u>Name of the Book:</u><h5 class="text-danger">{{ bk_pg.name }}</h5></h5>
+                    <h5 class="text-info"></h23><u>Author:</u><h5 class="text-danger">{{ bk_pg.author }}</h5></h5>
+                    <h5 class="text-info"><u>Publication:</u><h5 class="text-danger">{{ bk_pg.publication }}</h5></h5>
+                    <h5 class="text-info"><u>Edition:</u><h5 class="text-danger">{{ bk_pg.edition }}</h5></h5>
+                    <p class="text-info"><u>Description:</u><p class="text-danger">{{ bk_pg.description }}</p></p>
+                    <h5 class="text-info"><u>No. of Copies Available:</u><h5 class="text-danger">8</h5></h5>
+                    
+                    <button type="button" class="btn btn-dark block btn-lg active fa fa-download" href="#">Download</button>
+                    <button type="button" class="btn btn-light block btn-lg active" href="#">Preview Pdf</button>
+                </div>
+            </div>
+        </div>
+    </center>
+        
+    
+{% endblock %}
