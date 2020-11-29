@@ -11,6 +11,9 @@ urlpatterns = [
     path('signup/', views.signup, name = "register"),
     path('login/', views.loginPg, name = "login"),
     path('logout/', views.logoutUser, name = "logout"),
+    path('books/book/<str:book_id>/', views.book_pg,),
+    path('pdfs/pdf/<str:pdf_id>/', views.pdf_pg),
+    path('profile/', views.profile, name= "profile"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

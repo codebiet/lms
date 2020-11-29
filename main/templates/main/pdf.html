@@ -16,7 +16,7 @@
 <div class="container">
     <div class="row">
 
-        {% for p in pdf %}
+        {% for p in page_obj %}
         
         <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
             <a href="#" style="text-decoration: none; color:#2d3436;">
@@ -81,12 +81,60 @@
                 <h6>{{p.author}}</h6>
             </a>
         </div>
-        
-        
+        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
+            <a href="#" style="text-decoration: none; color:#2d3436;">
+                <img src="{{p.image.url}}" height="150" width="160" alt="{{p.name}}" title="{{p.name}}"/>
+                <h5>{{p.name}}</h5>
+                <h6>{{p.author}}</h6>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
+            <a href="#" style="text-decoration: none; color:#2d3436;">
+                <img src="{{p.image.url}}" height="150" width="160" alt="{{p.name}}" title="{{p.name}}"/>
+                <h5>{{p.name}}</h5>
+                <h6>{{p.author}}</h6>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
+            <a href="#" style="text-decoration: none; color:#2d3436;">
+                <img src="{{p.image.url}}" height="150" width="160" alt="{{p.name}}" title="{{p.name}}"/>
+                <h5>{{p.name}}</h5>
+                <h6>{{p.author}}</h6>
+            </a>
+        </div>
         
         
         {% endfor %}
     </div>
+
+    <div class="container">
+        <div class="row mt-5 mb-n2">
+            <div class="col-12 text-center text-muted">
+                <p><span>Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></p>
+            </div>
+        </div>
+    
+        <ul class="pagination pagination-sm mb-5 justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">&laquo; First</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            {% endif %}
+    
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+    
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
 </div>
 
 {% endblock %}
