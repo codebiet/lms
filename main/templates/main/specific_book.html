@@ -12,7 +12,7 @@
                     <img src="{{ bk_pg.image.url }}" class ="img-fluid rounded align-self-start mr-3" alt="Responsive Image" title="Book Image" height="450px" width="300px"/>
                     
                     <center>
-                        <h3 class="text-danger">Rate Me: </h3>
+                        <h3 class="text-danger mt-4">Rate Me: </h3>
                         <span class="fa fa-star checked "></span>
                         <span class="fa fa-star checked"></span>
                         <span class="fa fa-star checked"></span>
@@ -21,15 +21,38 @@
                     </center>
                 </div>
                 <div class="col-12 col-md-8 media-body" style="overflow-x: hidden;">
-                    <h5 class="text-info mt-0"><u>Name of the Book:</u><h5 class="text-danger">{{ bk_pg.name }}</h5></h5>
-                    <h5 class="text-info"></h23><u>Author:</u><h5 class="text-danger">{{ bk_pg.author }}</h5></h5>
-                    <h5 class="text-info"><u>Publication:</u><h5 class="text-danger">{{ bk_pg.publication }}</h5></h5>
-                    <h5 class="text-info"><u>Edition:</u><h5 class="text-danger">{{ bk_pg.edition }}</h5></h5>
-                    <p class="text-info"><u>Description:</u><p class="text-danger">{{ bk_pg.description }}</p></p>
-                    <h5 class="text-info"><u>No. of Copies Available:</u><h5 class="text-danger">8</h5></h5>
+                    <table class="table table-borderless table-md h5">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-info">Name of the Book: </th>
+                                <th scope="col" class="text-danger">{{ bk_pg.name }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="text-info">Author: </th>
+                                <td class="text-danger">{{ bk_pg.author }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-info">Publication: </th>
+                                <td class="text-danger">{{ bk_pg.publication }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-info">Edition: </th>
+                                <td class="text-danger">{{ bk_pg.edition }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-info">Description: </th>
+                                <td class="text-danger">{{ bk_pg.description }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-info">No. of Copies Available: </th>
+                                <td class="text-danger">5</td>
+                            </tr>
+                        </tbody>
+                    </table>
                     
-                    <button type="button" class="btn btn-dark block btn-lg active fa fa-download" href="#">Download</button>
-                    <button type="button" class="btn btn-light block btn-lg active" href="#">Preview Pdf</button>
+                    <button type="button" class="btn btn-outline-dark btn-lg mt-4" href="#"><strong>Issue Book</strong></button>
                 </div>
             </div>
         </div>

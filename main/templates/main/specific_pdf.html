@@ -3,28 +3,11 @@
 
 {% block title %}Books{% endblock %}
 
-{% block css %}
-<style>
-    .btn{
-        border:round;
-        color:white;
-        cursor:pointer;
-        font-size:20px;
-        border-radius:8px;
-    }
-    .img-responsive{
-        border-radius:8px;
-    }
-    body{
-        background-color:#FFEBCD;
-    }
-</style>
-{% endblock %}
 
 {% block main-content %}
         
     <center>
-        <div class="container" style="margin:25px; ">
+        <div class="container-fluid my-4">
             <div class="row media">
                 <div class="col-6 col-md-4" style="float: left; overflow-x: hidden;">
                     <img src="{{ p_pg.image.url }}" class ="img-fluid rounded align-self-start mr-3" alt="Responsive Image" title="Book Image" width="70%" height="70%"/>
@@ -39,17 +22,46 @@
                     </center>
                 </div>
                 <div class="col-12 col-md-8 media-body" style="overflow-x: hidden;">
-                    <h5 class="text-info"><u>Name of the Book:</u><h5 class="text-danger">{{ p_pg.name }}</h5></h5>
-                    <h5 class="text-info"></h23><u>Author:</u><h5 class="text-danger">{{ p_pg.author }}</h5></h5>
-                    <h5 class="text-info"><u>Publication:</u><h5 class="text-danger">{{ p_pg.publication }}</h5></h5>
-                    <h5 class="text-info"><u>Edition:</u><h5 class="text-danger">{{ p_pg.edition }}</h5></h5>
-                    <p class="text-info"><u>Description:</u><p class="text-danger">{{ p_pg.description }}</p></p>
-                    <h5 class="text-info"><u>No. of Copies Available:</u><h5 class="text-danger">8</h5></h5>
+                    <table class="table table-borderless table-md h5">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-info">Name of the Book: </th>
+                                <th scope="col" class="text-danger">{{ p_pg.name }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="text-info">Author: </th>
+                                <td class="text-danger">{{ p_pg.author }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-info">Publication: </th>
+                                <td class="text-danger">{{ p_pg.publication }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-info">Edition: </th>
+                                <td class="text-danger">{{ p_pg.edition }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-info">Description: </th>
+                                <td class="text-danger">{{ p_pg.description }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-info">No. of Copies Available: </th>
+                                <td class="text-danger">5</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
                     
-                    <button type="button" class="btn btn-dark block btn-lg active fa fa-download" href="#">Download</button>
-                    <button type="button" class="btn btn-light block btn-lg active" href="#">Preview Pdf</button>
+                    <button type="button" class="btn btn-dark btn-lg fa fa-download mr-4" href="{{ p_pg.pdf_file.url }}"> Download</button>
+                    <button type="button" class="btn btn-secondary btn-lg" href="#">Preview Pdf</button>
                 </div>
             </div>
+        </div>
+        <div class="container" style="justify-content: center;">
+            <embed src="media/pdfs/40_MATHS_TRICK__For_More_Book_-_www.gktrickhindi.com_.pdf" type="application/pdf" width = 100%>
+            
         </div>
     </center>
         
