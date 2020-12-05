@@ -9,34 +9,91 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from account.models import Account
 from django.db.models import Q
+<<<<<<< HEAD
 from django.urls import reverse
+=======
+
+import nltk
+from nltk.corpus import words
+from nltk.corpus import wordnet
+import numpy as np
+from nltk.metrics.distance import jaccard_distance
+from nltk.util import ngrams
+import pandas
+from nltk.corpus import stopwords
+
+correct_spellings = words.words()
+spellings_series = pandas.Series(correct_spellings)
+
+def jaccard1(entries, gram_number):
+
+    outcomes = []
+    for entry in entries: #iteratively for loop
+        if len(entry)>=gram_number:
+            spellings = spellings_series[spellings_series.str.startswith(entry[0])]
+            distances = ((jaccard_distance(set(ngrams(entry.lower(), gram_number)),
+                                           set(ngrams(word.lower(), gram_number))), word)
+                         for word in spellings)
+            sorted_dist = sorted(distances,reverse=False)
+            all_words=[i[1] for i in sorted_dist[:5] ]
+            outcomes.append(all_words)
+        else:
+            outcomes.append(entry)
+    return outcomes
+>>>>>>> c73bc16b0db1cb625e5fca22a7c41c629714d4ad
 
 def get_queryset(request, query):
-    querysetbook = []
-    querysetpdf = []
-    #print('query=', query)
-    queries = query.split(" ")
-    for q in queries:
-        docbooks = book.objects.filter(
-            Q(name__icontains=q) |
-            Q(author__icontains=q) |
-            Q(publication__icontains=q) |
-            Q(edition__icontains=q) |
-            Q(description__icontains=q)
+
+    search = query
+    entries = search.lower().split()
+    output = jaccard1(entries, 2)
+
+    synonyms = []
+    all_words=[]
+    for words in output:
+        for word in words:
+            for syn in wordnet.synsets(word):
+                for l in syn.lemmas():
+                    synonyms.append(l.name())
+            all_words.append(synonyms)
+
+    word_list=[]
+    for i in all_words:
+        for j in i:
+            word_list.append(j)
+
+    unique_words=np.unique([k.split('_') for k in word_list])
+
+    l=[]
+    z=unique_words
+    if len(z)>0:
+        if type(z[0])==list:
+            for words in z:
+                for word in words:
+                    l.append(word)
+        elif type(z[0])==np.str_:
+            for words in z:
+                l.append(words)
+
+    words=[word for word in l if not word in stopwords.words('english')]
+
+    querysetbook=[]
+    querysetpdf=[]
+
+    for q in words:
+        docbooks = book.objects.filter(Q(name__icontains=q) |
+                    Q(description__icontains=q)
         ).distinct()
         for docbook in docbooks:
             querysetbook.append(docbook)
-        docpdfs = pdf.objects.filter(
-            Q(name__icontains=q) |
-            Q(author__icontains=q) |
-            Q(publication__icontains=q) |
-            Q(edition__icontains=q) |
-            Q(description__icontains=q)
+        docpdfs = pdf.objects.filter(Q(name__icontains=q) |
+                    Q(description__icontains=q)
         ).distinct()
         for docpdf in docpdfs:
-            querysetpdf.append(docpdf) 
-    
+            querysetpdf.append(docpdf)
+
     return list(set(querysetbook)), list(set(querysetpdf))
+
 
 def index(request):
     query = ""
@@ -46,7 +103,7 @@ def index(request):
         qsetbook, qsetpdf = get_queryset(request, query)
         context = {'qsetbook': qsetbook, 'qsetpdf': qsetpdf}
         return render(request, 'main/search_related.html', context)
-        
+
     return render(request, 'main/index.html')
 
 def book_col(request):
@@ -166,7 +223,7 @@ def profile(request):
         qsetbook, qsetpdf = get_queryset(request, query)
         context = {'qsetbook': qsetbook, 'qsetpdf': qsetpdf}
         return render(request, 'main/search_related.html', context)
-    
+
     return render(request, 'main/profile.html')
 
 @login_required(login_url='issued_books')
@@ -178,11 +235,12 @@ def issued_books(request):
         qsetbook, qsetpdf = get_queryset(request, query)
         context = {'qsetbook': qsetbook, 'qsetpdf': qsetpdf}
         return render(request, 'main/search_related.html', context)
-        
+
     user = request.user
     orders = issued_book.objects.filter(account = user.id)
     context = {'orders': orders}
     return render(request, 'main/issuedbook.html',context)
+<<<<<<< HEAD
 
 @login_required(login_url='upload_pdf')
 def upload_pdf(request):
@@ -215,3 +273,5 @@ def issue_book(request, bid):
         ib.save()
         issued = True
     return HttpResponseRedirect(reverse('book', args=[str(bid)]))
+=======
+>>>>>>> c73bc16b0db1cb625e5fca22a7c41c629714d4ad
