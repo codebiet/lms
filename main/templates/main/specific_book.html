@@ -43,12 +43,18 @@
                             </tr>
                         </tbody>
                     </table>
-                    
-                    <button type="button" class="btn btn-outline-dark btn-lg mt-4" href="#"><strong>Issue Book</strong></button>
+                    <form action="{% url 'issue_book' bk_pg.id %}" method="POST">
+                        {% csrf_token %}
+
+                        {% if not issued %}
+                        <button type="submit" id="issue" value="{{ bk_pg.id }}" class="btn btn-outline-dark btn-lg mt-4"><strong>Issue Book</strong></button>
+                        {% else %}
+                        <button type="submit" id="issue" value="{{ bk_pg.id }}" class="btn btn-outline-danger btn-lg mt-4"><strong>Cancel Book</strong></button>
+                        {% endif %}
+                    </form>
                 </div>
             </div>
         </div>
     </center>
-        
     
 {% endblock %}

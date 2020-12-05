@@ -15,5 +15,7 @@ urlpatterns = [
     path('profile/', views.profile, name= "profile"),
     path('issued_books/', views.issued_books, name="issued_books"),
     path('search_results/', views.get_queryset, name="search"),
+    path('upload_pdf/', views.upload_pdf, name="upload_pdf"),
+    path('issue/<str:bid>/', views.issue_book, name="issue_book"),
 ]
 

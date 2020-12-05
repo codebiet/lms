@@ -21,9 +21,9 @@ class book(models.Model):
     name=models.CharField(max_length=100)
     author=models.CharField(max_length=100)
     publication=models.CharField(max_length=100)
-    edition=models.CharField(max_length=100)
+    edition=models.IntegerField(('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
     description=models.TextField(max_length=500)
-    tags = models.ManyToManyField(Tag)
+    
 
     def __str__(self):
         return self.name
@@ -36,7 +36,7 @@ class pdf(models.Model):
     publication=models.CharField(max_length=100)
     edition=models.IntegerField(('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
     description=models.TextField(max_length=500)
-    tags = models.ManyToManyField(Tag)
+    
 
     def __str__(self):
         return self.name

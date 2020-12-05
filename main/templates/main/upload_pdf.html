@@ -1,0 +1,63 @@
+{% extends "main/index.html" %}
+{% load static %}
+
+{% block title %}Upload PDF{% endblock %}
+
+{% block main-content %}
+    
+    <div class="container my-5">
+        <div class="container">
+            <center class="mb-5">
+                <h2>PDF Uploading Form</h2>
+            </center>
+            <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-row mt-2">
+                    <div class="form-group col-md-6"><i class="fas fa-file-upload"> Upload PDF File</i>
+                        <div>
+                            {{form.pdf_file}}
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6"><i class="fa fa-upload" aria-hidden="true"> Upload Cover Image of PDF</i>
+                        <div class="image-upload-wrap">
+                            {{form.image}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="inputbookname"><i class="fa fa-book" aria-hidden="true"> Book Name</i></label>
+                    <input type="text" name="name" class="form-control" id="inputbookname" placeholder="Book Name" required>
+                </div>
+                <div class="form-row mt-2">
+                    <label for="inputauthorname"><i class="fa fa-graduation-cap" aria-hidden="true"> Author</i></label>
+                    <input type="text" name="author" class="form-control" id="inputauthorname" placeholder="Author" required>
+                </div>
+                <div class="form-row mt-2">
+                    <div class="form-group col-md-10">
+                        <label for="inputpublication"><i class="fas fa-award    "> Publication</i></label>
+                        <input type="text" name="publication" class="form-control" id="inputpublication" placeholder="Publication" required>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputedition"><i class="fa fa-calendar-check-o" aria-hidden="true"><b> Edition</b></i></label>
+                        <div>{{form.edition}}</div>
+                        
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea3"><i class="fas fa-file-alt    "> Description</i></label>
+                    <textarea class="form-control" name="description" id="exampleFormControlTextarea3" rows="7"></textarea>
+                </div>
+                <p style="color:red;">{{form.errors}}</p>
+                <input class="btn btn-outline-success btn-lg" style="font-weight: bold;" type="submit" value="Submit">
+    
+                <button type="reset" style="float: right; font-weight: bold;" class="btn btn-outline-danger btn-lg">Reset</button>
+                
+            </form>
+        </div>
+    </div>
+
+        
+        
+        
+{% endblock %}

@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect,get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core.paginator import Paginator
 from main.models import book, pdf, issued_book
-from .forms import CreateUserForm
+from .forms import CreateUserForm, UploadPdfForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from account.models import Account
 from django.db.models import Q
-
+from django.urls import reverse
 
 def get_queryset(request, query):
     querysetbook = []
@@ -50,13 +50,6 @@ def index(request):
     return render(request, 'main/index.html')
 
 def book_col(request):
-    query = ""
-    if request.GET:
-        query = request.GET['q']
-        #print(query)
-        qsetbook, qsetpdf = get_queryset(request, query)
-        context = {'qsetbook': qsetbook, 'qsetpdf': qsetpdf}
-        return render(request, 'main/search_related.html', context)
 
     book_display = book.objects.all()
     paginator = Paginator(book_display, 1)
@@ -69,13 +62,6 @@ def book_col(request):
 
 
 def pdf_col(request):
-    query = ""
-    if request.GET:
-        query = request.GET['q']
-        #print(query)
-        qsetbook, qsetpdf = get_queryset(request, query)
-        context = {'qsetbook': qsetbook, 'qsetpdf': qsetpdf}
-        return render(request, 'main/search_related.html', context)
 
     pdf_display = pdf.objects.all()
     paginator = Paginator(pdf_display, 1)
@@ -96,7 +82,11 @@ def book_pg(request, book_id):
         return render(request, 'main/search_related.html', context)
 
     bk_pg = book.objects.get(id=book_id)
-    context = {'bk_pg' : bk_pg}
+    user = request.user
+    issued = False
+    if issued_book.objects.filter(account=user, book=bk_pg).exists():
+        issued = True
+    context = {'bk_pg' : bk_pg, 'issued' : issued}
     return render(request, 'main/specific_book.html', context)
 
 def pdf_pg(request, pdf_id):
@@ -194,5 +184,34 @@ def issued_books(request):
     context = {'orders': orders}
     return render(request, 'main/issuedbook.html',context)
 
+@login_required(login_url='upload_pdf')
+def upload_pdf(request):
+    form = UploadPdfForm()
+    if request.method == 'POST':
+        print(request.POST)
+        form = UploadPdfForm(request.POST, request.FILES)
+        if form.is_valid():
+            print('post:',request.POST)
+            form.save()
+            return redirect('profile')
 
+    context = {'form': form}
+    return render(request, 'main/upload_pdf.html', context)
     
+@login_required(login_url='upload_pdf')
+def issue_book(request, bid):
+    b = book.objects.get(id = bid)
+    user = request.user
+    issued= False
+    print(b, user)
+    if issued_book.objects.filter(account=user, book=b).exists():
+        ib = issued_book.objects.get(account=user, book=b)
+        print('deleted')
+        ib.delete()
+        issued = False
+    else:
+        ib = issued_book.objects.create(account=user, book=b)
+        print('saved')
+        ib.save()
+        issued = True
+    return HttpResponseRedirect(reverse('book', args=[str(bid)]))
