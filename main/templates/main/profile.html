@@ -3,29 +3,66 @@
 
 {% block title %}Profile{% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'main\style.css' %}">
+
+{% endblock %}
+
 {% block main-content %}
 
-<div class="container-fluid" style="max-width: 100;">
-    <img src="{{ user.cover_image.url }}" class="img-fluid" style="max-width: 100%;height: 250px; overflow-x: hidden;">
+<div class="container-fluid mx-0 px-0" style="max-width: 100;">
+    <img src="{{ user.cover_image.url }}" class="img-fluid mx-0 px-0" style="width: 100%; height: 250px; overflow-x: hidden;">
 </div>                
-<div class="container" style="margin: 0;">
+<div class="container-fluid" style="margin: 0;">
     <div class="row media">
-        <div class="col-6 col-md-4 mt-2 text-center" style="float: left; overflow-x: hidden;">
-            <img src="{{ user.profile_image.url }}" class="mr-3 mt-3 rounded-circle" width="70%" height="70%">
-            <button type="button" class="btn btn-primary, btn block, btn-lg mt-4"><strong>Change Password</strong></button>
+        <div class="col-6 col-md-4 mt-2 text-center image-container" id="id_image_container" style="float: left; overflow-x: hidden;">
+            <img src="{{ user.profile_image.url }}" class="mr-3 mt-3 border border-dark rounded-circle img-fluid profile-image" id="id_profile_image_display" width="70%" height="70%">
+            <button type="button" class="btn btn-outline-dark btn-block btn-lg mt-4"><strong>Change Password</strong></button>
+            <button type="button" class="btn btn-outline-info btn-block btn-lg mt-4"><strong>Update Profile</strong></button>
         </div>
         <div class="col-12 col-md-8 my-5 media-body" style="overflow-x: hidden">
-            <div class="container-fluid" style="vertical-align: middle;">
-                <h4 class="text-primary">NAME: {{ user.first_name }} {{ user.last_name }}</h4>
-                <h4 class="text-primary">ROLL NO.: {{ user.roll_no }}</h4>
-                <h4 class="text-primary">BRANCH: {{ user.branch }}</h4>
-                <h4 class="text-primary">YEAR: {{ user.year }}</h4>
-                <h4 class="text-primary">EMAIL ID: {{ user.email }}</h4>
-                <h4 class="text-primary mb-2">NO. OF BOOKS ISSUED: 5</h4>
-            
-                <button type="button" class="btn btn-primary, btn block, btn-lg mt-4">Book Issue</button>
-                <button type="button" class="btn btn-primary, btn block, btn-lg mt-4">Upload PDF</button>
-            </div>
+            <table class="table table-borderless table-md h5">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-primary">NAME: </th>
+                        <th scope="col" class="text-success">{{ user.first_name }} {{ user.last_name }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row" class="text-primary">ROLL NO.: </th>
+                        <td class="text-success">{{ user.roll_no }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-primary">BRANCH: </th>
+                        <td class="text-success">{{ user.branch }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-primary">YEAR: </th>
+                        <td class="text-success">{{ user.year }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-primary">EMAIL ID: </th>
+                        <td class="text-success">{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-primary">NO. OF BOOKS ISSUED: </th>
+                        <td class="text-success">5</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <a href="{% url 'issued_books' %}">
+                                <button type="button" class="btn btn-outline-primary btn-lg mt-4"><strong>Issued Books</strong></button>
+                            </a>
+                        </th>
+                        <td>
+                            <a href="{% url 'upload_pdf' %}">
+                                <button type="button" class="btn btn-outline-success btn-lg mt-4"><strong>Upload PDF</strong></button>
+                             </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div> 
        
     </div>

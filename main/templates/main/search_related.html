@@ -1,0 +1,110 @@
+{% extends "main/index.html" %}
+{% load static %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'main\style.css' %}">
+
+    <style>
+        body{
+            background-color:#E6E6FA;
+            font-family:"Comic Sans MS", cursive, sans-serif;
+            
+            --stripe: #cfd8dc;
+            --bg: #e1e1e1;
+
+            background: linear-gradient(135deg, var(--bg) 25%, transparent 25%) -50px 0,
+                linear-gradient(225deg, var(--bg) 25%, transparent 25%) -50px 0,
+                linear-gradient(315deg, var(--bg) 25%, transparent 25%),
+                linear-gradient(45deg, var(--bg) 25%, transparent 25%);
+            background-size: 100px 100px;
+            background-color: var(--stripe);
+            
+            
+            
+        }
+    </style>
+
+{% endblock %}
+
+{% block main-content %}
+
+    <center> 
+        <h3 class="text-info" style="float:left;"><u>Book Related to Search:</u><h3>
+    </center>
+    <br><br>
+    <div class="container">
+        {% if qsetbook %}
+        <div class="row">
+        
+            {% for doc in qsetbook %}
+
+            <div class="col-lg-3 col-md-6 col-xl-2" style="text-align:center; overflow-x: hidden;">
+                <a href="{% url 'book' doc.id %}" style="text-decoration: none; color:#2d3436;">
+                    <div class="card my-3">
+                        <img src="{{ doc.image.url }}" class="card-img-top img-responsive img-rounded grid-gutter-width" alt="{{doc.name}}" width="150" height="160">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ doc.name }}</h5>
+                            <h6 class="card-text">{{ doc.author }}</h6>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            {% endfor %}
+        
+        </div>
+        {% else %}
+
+            <div class="card mb-3">
+                <div class = "card-body my-2">
+                    <h3 class="card-title">No Results</h3>
+                    <p class="card-text">No Books found according to your search</p>
+                </div>
+            </div>
+
+        {% endif %}
+    </div>
+        
+    <br><br><br>    
+    <center> 
+        <h3 class="text-info" style="float:left;"><u>Pdf Related to Search:</u><h3>
+    </center>
+    <br><br>
+        
+    <div class="container">
+        {% if qsetpdf %}
+        <div class="row">
+        
+            {% for doc in qsetpdf %}
+
+            <div class="col-lg-3 col-md-6 col-xl-2" style="text-align:center; overflow-x: hidden;">
+                <a href="{% url 'pdf' doc.id %}" style="text-decoration: none; color:#2d3436;">
+                    <div class="card my-3">
+                        <img src="{{ doc.image.url }}" class="card-img-top img-responsive img-rounded grid-gutter-width" alt="{{doc.name}}" width="150" height="160">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ doc.name }}</h5>
+                            <h6 class="card-text">{{ doc.author }}</h6>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            {% endfor %}
+        
+        </div>
+        {% else %}
+
+            <div class="card mb-3">
+                <div class = "card-body mt-2 mb-2">
+                    <h3 class="card-title">No Results</h3>
+                    <p class="card-text">No PDFs found according to your search</p>
+                </div>
+            </div>
+
+        {% endif %}
+    </div>
+            
+       
+{% endblock %}

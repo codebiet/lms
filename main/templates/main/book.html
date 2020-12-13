@@ -20,7 +20,7 @@
         {% for bk in page_obj %}
         
         <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
-            <a href="#" style="text-decoration: none; color:#2d3436;">
+            <a href="{% url 'book' bk.id %}" style="text-decoration: none; color:#2d3436;">
                 <img src="{{bk.image.url}}" height="150" width="160" alt="{{bk.name}}" title="{{bk.name}}"/>
                 <h5>{{bk.name}}</h5>
                 <h6>{{bk.author}}</h6>

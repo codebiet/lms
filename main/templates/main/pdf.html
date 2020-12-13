@@ -19,90 +19,12 @@
         {% for p in page_obj %}
         
         <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
-            <a href="#" style="text-decoration: none; color:#2d3436;">
+            <a href="{% url 'pdf' p.id %}" style="text-decoration: none; color:#2d3436;">
                 <img src="{{p.image.url}}" height="150" width="160" alt="{{p.name}}" title="{{p.name}}"/>
                 <h5>{{p.name}}</h5>
                 <h6>{{p.author}}</h6>
             </a>
         </div>
-        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
-            <a href="#" style="text-decoration: none; color:#2d3436;">
-                <img src="{{p.image.url}}" height="150" width="160" alt="{{p.name}}" title="{{p.name}}"/>
-                <h5>{{p.name}}</h5>
-                <h6>{{p.author}}</h6>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
-            <a href="#" style="text-decoration: none; color:#2d3436;">
-                <img src="{{p.image.url}}" height="150" width="160" alt="{{p.name}}" title="{{p.name}}"/>
-                <h5>{{p.name}}</h5>
-                <h6>{{p.author}}</h6>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
-            <a href="#" style="text-decoration: none; color:#2d3436;">
-                <img src="{{p.image.url}}" height="150" width="160" alt="{{p.name}}" title="{{p.name}}"/>
-                <h5>{{p.name}}</h5>
-                <h6>{{p.author}}</h6>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
-            <a href="#" style="text-decoration: none; color:#2d3436;">
-                <img src="{{p.image.url}}" height="150" width="160" alt="{{p.name}}" title="{{p.name}}"/>
-                <h5>{{p.name}}</h5>
-                <h6>{{p.author}}</h6>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
-            <a href="#" style="text-decoration: none; color:#2d3436;">
-                <img src="{{p.image.url}}" height="150" width="160" alt="{{p.name}}" title="{{p.name}}"/>
-                <h5>{{p.name}}</h5>
-                <h6>{{p.author}}</h6>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
-            <a href="#" style="text-decoration: none; color:#2d3436;">
-                <img src="{{p.image.url}}" height="150" width="160" alt="{{p.name}}" title="{{p.name}}"/>
-                <h5>{{p.name}}</h5>
-                <h6>{{p.author}}</h6>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
-            <a href="#" style="text-decoration: none; color:#2d3436;">
-                <img src="{{p.image.url}}" height="150" width="160" alt="{{p.name}}" title="{{p.name}}"/>
-                <h5>{{p.name}}</h5>
-                <h6>{{p.author}}</h6>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
-            <a href="#" style="text-decoration: none; color:#2d3436;">
-                <img src="{{p.image.url}}" height="150" width="160" alt="{{p.name}}" title="{{p.name}}"/>
-                <h5>{{p.name}}</h5>
-                <h6>{{p.author}}</h6>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
-            <a href="#" style="text-decoration: none; color:#2d3436;">
-                <img src="{{p.image.url}}" height="150" width="160" alt="{{p.name}}" title="{{p.name}}"/>
-                <h5>{{p.name}}</h5>
-                <h6>{{p.author}}</h6>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
-            <a href="#" style="text-decoration: none; color:#2d3436;">
-                <img src="{{p.image.url}}" height="150" width="160" alt="{{p.name}}" title="{{p.name}}"/>
-                <h5>{{p.name}}</h5>
-                <h6>{{p.author}}</h6>
-            </a>
-        </div>
-        <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
-            <a href="#" style="text-decoration: none; color:#2d3436;">
-                <img src="{{p.image.url}}" height="150" width="160" alt="{{p.name}}" title="{{p.name}}"/>
-                <h5>{{p.name}}</h5>
-                <h6>{{p.author}}</h6>
-            </a>
-        </div>
-        
         
         {% endfor %}
     </div>

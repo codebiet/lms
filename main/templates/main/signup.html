@@ -11,10 +11,10 @@
 {% block main-content %}
 
 
-	<div class="container h-100" style="overflow-y: hidden;">
-		<div class="d-flex justify-content-center h-100">
-			<div class="user_card">
-				<div class="d-flex justify-content-center">
+	<div class="container h-125 my-5" style="overflow-y: hidden;">
+		<div class="d-flex justify-content-center h-125 my-5" style="overflow-y:hidden;">
+			<div class="user_card" style="overflow-y:hidden;">
+				<div class="d-flex justify-content-center" style="overflow-y:hidden;">
 					<h3 id="form-title">REGISTER ACCOUNT</h3>
 				</div>
 				<div class="d-flex justify-content-center form_container">
@@ -23,18 +23,18 @@
 						{% csrf_token %}
 						<div class="input-group mb-2">
 							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
+								<span class="input-group-text"><i class="fas fa-user"></i></span>
 							</div>
 							{{form.first_name}}
 							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
+								<span class="input-group-text"><i class="fas fa-user"></i></span>
 							</div>
 							{{form.last_name}}
 						</div>
 						
 						<div class="input-group mb-2">
 							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
+								<span class="input-group-text"><i class="fa fa-tty" aria-hidden="true"></i></span>
 							</div>
 							{{form.roll_no}}
 						</div>
@@ -46,20 +46,43 @@
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
+								<span class="input-group-text"><i class="fa fa-briefcase" aria-hidden="true"></i></span>
 							</div>
-							{{form.branch}}
+							<div class="form-control">Branch :	 {{form.branch}}</div>
 							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
+								<span class="input-group-text"><i class="fa fa-hourglass-end" aria-hidden="true"></i></span>
 							</div>
-							{{form.year}}
+							<div class="form-control">Year : 	{{form.year}}</div>
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-key"></i></span>
+								<span class="input-group-text"><i class="fas fa-book-open "></i></span>
 							</div>
-							<div class="form-control" style="display: inline-flex;">{{form.areas_of_interest}}</div>
+							<p class="text-center form-control" style="background-color:white"><b>Areas Of Interests</b></p>
 						</div>
+						<div class="input-group mb-2">
+							
+							<input type="checkbox" id="aoi1" name="areas_of_interest" value="1">
+							<div class="form-control" style="color:white;background-color: #2d3436; border-color: #2d3436;">Web Dev</div>
+							<input type="checkbox" id="aoi2" name="areas_of_interest" value="2">
+							<div class="form-control" style="color:white;background-color: #2d3436; border-color: #2d3436;">App Dev</div>
+						</div>
+							
+						<div class="input-group mb-2">	
+							<input type="checkbox" id="aoi3" name="areas_of_interest" value="3">
+							<div class="form-control" style="color:white;background-color: #2d3436; border-color: #2d3436;">ML</div>
+							
+							<input type="checkbox" id="aoi4" name="areas_of_interest" value="4">
+							<div class="form-control" style="color:white;background-color: #2d3436; border-color: #2d3436;">AI</div>
+						</div>
+						<div class="input-group mb-2">	
+							<input type="checkbox" id="aoi5" name="areas_of_interest" value="5">
+							<div class="form-control" style="color:white;background-color: #2d3436; border-color: #2d3436;">Electronics</div>
+							
+							<input type="checkbox" id="aoi6" name="areas_of_interest" value="6">
+							<div class="form-control" style="color:white;background-color: #2d3436; border-color: #2d3436;">Electrical</div>
+						</div>	
+						
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
@@ -96,12 +119,12 @@
 
 		//Query All input fields
 		var form_fields = document.getElementsByTagName('input')
-      form_fields[2].placeholder='First Name...';
-      form_fields[3].placeholder='Last Name...';
-      form_fields[4].placeholder='Roll No...';
+      	form_fields[2].placeholder='First Name...';
+      	form_fields[3].placeholder='Last Name...';
+      	form_fields[4].placeholder='Roll No...';
 		form_fields[5].placeholder='Email...';
-		form_fields[6].placeholder='Enter password...';
-		form_fields[7].placeholder='Re-enter Password...';
+		form_fields[12].placeholder='Enter password...';
+		form_fields[13].placeholder='Re-enter Password...';
 
 
 		for (var field in form_fields){	

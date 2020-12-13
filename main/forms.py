@@ -5,6 +5,7 @@ from multiselectfield import MultiSelectField
 from account.models import Account
 from account.admin import AccountAdmin
 from django.contrib.auth import get_user_model
+from main.models import pdf
 
 
 class CreateUserForm(forms.ModelForm):
@@ -48,4 +49,7 @@ class CreateUserForm(forms.ModelForm):
             user.save()
         return user
 
-    
+class UploadPdfForm(forms.ModelForm):
+    class Meta:
+        model = pdf
+        fields = '__all__'

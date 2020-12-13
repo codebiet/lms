@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<nav class="navbar navbar-expand-lg mr-0" >
+<nav class="navbar navbar-expand-lg navbar-fixed-top mr-0" style="overflow: hidden">
     <a class="navbar-brand ml-5" href="{% url 'index' %}" style="font-family: Georgia, 'Times New Roman', Times, serif;">BIET Library</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon fas fa-bars"></span>
@@ -22,9 +22,9 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'pdfs' %}">PDFs</a></li>
             
         </ul>
-        <form class="form-inline ml-lg-2">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-1 my-sm-0" type="submit">Search</button>
+        <form class="form-inline ml-lg-2"  method = "get">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search" name = "q" id="id_q">
+            <button class="btn btn-outline-success my-1 my-sm-0" type="submit" href="{% url 'search' %}">Search</button>
         </form>
         <ul class="navbar-nav ml-lg-auto ml-0 mr-lg-5">
             {% if not request.user.is_authenticated %}
@@ -44,7 +44,7 @@
     <div class="container-float" style="height: 500px;"></div>
 {% endblock %}
 
-<div class="footer pt-4 mr-0" style="overflow-x: hidden;">
+<div class="footer pt-4 mr-0" style="overflow: hidden;">
     <div class="row">
         <div class="col-sm-12 col-md-12 text-center" style="padding-bottom: 15px;">
             <a class="nav-link" style="display: inline;" href="http://bietjhs.ac.in/address/" target="_blank">Contact Us</a>
@@ -61,4 +61,6 @@
         </div>
     </div>
 </div>
+
+
 {% endblock %}
