@@ -9,9 +9,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from account.models import Account
 from django.db.models import Q
-<<<<<<< HEAD
+
 from django.urls import reverse
-=======
+
 
 import nltk
 from nltk.corpus import words
@@ -40,7 +40,7 @@ def jaccard1(entries, gram_number):
         else:
             outcomes.append(entry)
     return outcomes
->>>>>>> c73bc16b0db1cb625e5fca22a7c41c629714d4ad
+
 
 def get_queryset(request, query):
 
@@ -240,7 +240,6 @@ def issued_books(request):
     orders = issued_book.objects.filter(account = user.id)
     context = {'orders': orders}
     return render(request, 'main/issuedbook.html',context)
-<<<<<<< HEAD
 
 @login_required(login_url='upload_pdf')
 def upload_pdf(request):
@@ -273,5 +272,4 @@ def issue_book(request, bid):
         ib.save()
         issued = True
     return HttpResponseRedirect(reverse('book', args=[str(bid)]))
-=======
->>>>>>> c73bc16b0db1cb625e5fca22a7c41c629714d4ad
+

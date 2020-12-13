@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<nav class="navbar navbar-expand-lg navbar-fixed-top mr-0" style="overflow: hidden">
+<nav class="navbar navbar-expand-lg navbar-fixed-topk mr-0">
     <a class="navbar-brand ml-5" href="{% url 'index' %}" style="font-family: Georgia, 'Times New Roman', Times, serif;">BIET Library</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon fas fa-bars"></span>
@@ -32,7 +32,18 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
             {% endif %}
             {% if request.user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Hello, {{request.user.first_name}}</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Hello, {{request.user.first_name}}
+                </a>
+                <div class="dropdown-menu" id="dropdown" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" style='color:#2d3436 ;' href="{% url 'issued_books' %}">Issued Books</a>
+                    <a class="dropdown-item" style='color:#2d3436 ;' href="{% url 'upload_pdf' %}">Upload PDF</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" style='color:#2d3436 ;' href="{% url 'profile' %}">Profile</a>
+                </div>
+            </li>
+            
             <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
             {% endif %}
         </ul>
