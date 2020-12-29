@@ -1,14 +1,22 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.paginator import Paginator
+from lms import settings
 from main.models import book, pdf, issued_book
-from .forms import CreateUserForm, UploadPdfForm
+from .forms import CreateUserForm, UploadPdfForm, UpdateUserForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from account.models import Account
 from django.db.models import Q
+from django.core.files.storage import default_storage, FileSystemStorage
+import os
+import cv2
+import json
+import base64
+import requests
+from django.core import files
 
 from django.urls import reverse
 
@@ -21,6 +29,8 @@ from nltk.metrics.distance import jaccard_distance
 from nltk.util import ngrams
 import pandas
 from nltk.corpus import stopwords
+
+TEMP_PROFILE_IMAGE_NAME = "profile_image.png"
 
 correct_spellings = words.words()
 spellings_series = pandas.Series(correct_spellings)
@@ -113,8 +123,8 @@ def book_col(request):
 
     page_no = request.GET.get('page')
     page_obj = paginator.get_page(page_no)
-
-    context = {'page_obj' : page_obj}
+    repeat  = [1,2,3,4,5,6,7,8,9,10,11,12]
+    context = {'page_obj' : page_obj, 'repeat' : repeat}
     return render(request, 'main/book.html', context)
 
 
@@ -125,8 +135,8 @@ def pdf_col(request):
 
     page_no = request.GET.get('page')
     page_obj = paginator.get_page(page_no)
-
-    context = {'page_obj' : page_obj}
+    repeat  = [1,2,3,4,5,6,7,8,9,10,11,12]
+    context = {'page_obj' : page_obj, 'repeat' : repeat}
     return render(request, 'main/pdf.html', context)
 
 def book_pg(request, book_id):
@@ -223,10 +233,13 @@ def profile(request):
         qsetbook, qsetpdf = get_queryset(request, query)
         context = {'qsetbook': qsetbook, 'qsetpdf': qsetpdf}
         return render(request, 'main/search_related.html', context)
+    user = request.user
+    orders = issued_book.objects.filter(account = user.id)
+    no_of_orders = len(orders)
+    context = {'no_of_orders' : no_of_orders}
+    return render(request, 'main/profile.html', context)
 
-    return render(request, 'main/profile.html')
-
-@login_required(login_url='issued_books')
+@login_required(login_url='login')
 def issued_books(request):
     query = ""
     if request.GET:
@@ -241,7 +254,7 @@ def issued_books(request):
     context = {'orders': orders}
     return render(request, 'main/issuedbook.html',context)
 
-@login_required(login_url='upload_pdf')
+@login_required(login_url='login')
 def upload_pdf(request):
     form = UploadPdfForm()
     if request.method == 'POST':
@@ -255,7 +268,7 @@ def upload_pdf(request):
     context = {'form': form}
     return render(request, 'main/upload_pdf.html', context)
     
-@login_required(login_url='upload_pdf')
+@login_required(login_url='login')
 def issue_book(request, bid):
     b = book.objects.get(id = bid)
     user = request.user
@@ -273,3 +286,123 @@ def issue_book(request, bid):
         issued = True
     return HttpResponseRedirect(reverse('book', args=[str(bid)]))
 
+@login_required(login_url='login')
+def update_profile(request, *args, **kwargs):
+    account = request.user
+    if account.pk != request.user.pk:
+        return HttpResponse("You cannot edit someone else's profile.")
+    context = {}
+    print('okay')
+    if request.POST:
+        print('saving sent')
+        form =  UpdateUserForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            print('saving..')
+            account.profile_image.delete()
+            form.save()
+            print('saved')
+            return redirect('profile')
+        else:
+            form = UpdateUserForm(request.POST, instance=request.user,
+                initial = {
+                    'id': account.pk,
+                    'email': account.email,
+                    'first_name' : account.first_name,
+                    'last_name' : account.last_name,
+                    'branch' : account.branch,
+                    'year' : account.year,
+                    'roll_no' : account.roll_no,
+                    'profile_image' : account.profile_image,
+                    'cover_image' : account.cover_image,
+                }
+            )
+            context['form'] = form
+    else:
+        form = UpdateUserForm(
+            initial = {
+                'id': account.pk,
+                'email': account.email,
+                'first_name' : account.first_name,
+                'last_name' : account.last_name,
+                'branch' : account.branch,
+                'year' : account.year,
+                'roll_no' : account.roll_no,
+                'profile_image' : account.profile_image,
+                'cover_image' : account.cover_image,
+            }
+        )
+        context['form'] = form
+    context['DATA_UPLOAD_MAX_MEMORY_SIZE'] = settings.DATA_UPLOAD_MAX_MEMORY_SIZE
+    return render(request, 'main/update_profile.html', context)
+
+def save_temp_profile_image_from_base64String(imageString, user):
+    print("fnei")
+    INCORRECT_PADDING_EXCEPTION = "Incorrect Padding"
+    try:
+        print("why")
+        if not os.path.exists(settings.TEMP):
+            os.mkdir(settings.TEMP)
+            print("ohh")
+        if not os.path.exists(f"{settings.TEMP}/{user.pk}"):
+            os.mkdir(f"{settings.TEMP}/{user.pk}")
+            print("yes")
+        url = os.path.join(f"{settings.TEMP}/{user.pk}", TEMP_PROFILE_IMAGE_NAME)
+        print("shit")
+        storage = FileSystemStorage(location=url)
+        print("kya hai")
+        image = base64.b64decode(imageString)
+        print("sk3")
+        with storage.open('', 'wb+') as destination:
+            destination.write(image)
+            destination.close()
+        print("sk2")
+        return url
+    except Exception as e:
+        print("fucked up")
+        if str(e) == INCORRECT_PADDING_EXCEPTION:
+            imageString += "=" * ((4 - len(imageString) % 4) % 4)
+            return save_temp_profile_image_from_base64String(imageString, user)
+    return None
+
+def crop_image(request, *args, **kwargs):
+    print("iwiw")
+    payload = {}
+    user = request.user
+    if request.POST and user.is_authenticated:
+        print("kk")
+        try:
+            imageString = request.POST.get("image")
+            url = save_temp_profile_image_from_base64String(imageString,user)
+            img = cv2.imread(url)
+            print("ll")
+            cropX = int(float(str(request.POST.get("cropX"))))
+            cropY = int(float(str(request.POST.get("cropY"))))
+            cropWidth = int(float(str(request.POST.get("cropWidth"))))
+            cropHeight = int(float(str(request.POST.get("cropHeight"))))
+
+            if cropX<0:
+                cropX =0
+            if cropY<0:
+                cropY=0
+            
+            crop_img = img[cropY:cropY + cropHeight, cropX:cropX + cropWidth]
+            
+            cv2.imwrite(url, crop_img)
+            print("pp")
+            user.profile_image.delete()
+            print("no")
+            user.profile_image.save("profile_image.png", files.File(open(url, "rb")))
+            print("oops")
+            user.save()
+            print("sure")
+            payload['result'] = "success"
+            payload['cropped_profile_image'] = user.profile_image.url
+            print("sk1")
+            os.remove(url)
+
+        except Exception as e:
+            print("fuck")
+            payload['result'] = "error"
+            payload['exception'] = str(e)
+
+    return HttpResponse(json.dumps(payload), content_type= "application/json")

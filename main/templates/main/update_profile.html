@@ -1,0 +1,474 @@
+{% extends "main/index.html" %}
+{% load static %}
+
+{% block title %}Update Profile{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'main\style.css' %}">
+    <style>
+        .image-container{
+            max-width:70%;
+            height:70%;
+            position:relative;
+        }
+        #id_confirm #idc_confirm{
+            color:green;
+        }
+        #id_confirm:hover #idc_confirm:hover{
+            opacity:0.3;
+        }
+        #id_cancel:hover #idc_cancel:hover{
+            opacity:0.3
+        }
+        #id_cancel #idc_cancel{
+            color:red;
+        }
+        .material-icons{
+            font-size:30px;
+        }
+        .material-icons:hover{
+            cursor:pointer;
+        }
+    </style>
+{% endblock %}
+
+        
+{% block main-content %}
+        <!--code-->
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+            
+            
+    <div class="container-fluid mx-0 px-0" style="max-width: 100;" id="idc_image_container">
+        <div class="mb-2" id="idc_image_crop_confirm">
+            <i class="fa fa-check" id="idc_confirm" aria-hidden="true"></i>
+            <i class="fas fa-cross" id="idc_cancel"></i>
+            
+        </div>
+        <img src="{{ user.cover_image.url }}" class="img-fluid  mx-0 px-0" id="id_cover_image" style="width: 100%; height: 300px; overflow-x: hidden;">
+        <div class="middle" id="idc_middle_container">
+            <div class="text" id="idc_text"></div>
+        </div>
+    </div>                
+    <div class="container-fluid" style="margin: 0;">
+        <div class="row media">
+            <div class="col-6 col-md-4 my-5 text-center " id="id_image_container" style="float: left; overflow-x: hidden;">
+                <div class="mb-2" id="id_image_crop_confirm">
+                    <i class="fa fa-check" id="id_confirm" aria-hidden="true"></i>
+                    <i class="fas fa-cross" id="id_cancel"></i>
+                    
+                </div>
+                <img class="m-auto mt-2 border border-dark image-container rounded-circle img-fluid profile-image" id="id_profile_image_display" src="{{ user.profile_image.url }}" alt="image">
+                <div class="middle" id="id_middle_container">
+                    <div class="text" id="id_text">Edit</div>
+                </div>
+                <input class="d-none" type="file" id="id_profile_image" name="profile_image" onchange="readURL(this)">
+            </div>
+            <div class="col-12 col-md-8 my-5 mr-4 media-body" style="overflow-x: hidden">
+                
+                <table class="table table-borderless table-md h5">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-primary">NAME: </th>
+                            <th scope="col" class="text-success">
+                                <input type="firstname" name="first_name" class="form-control" id="firstname" width="50%" placeholder="First Name" required autofocus value={{form.initial.first_name}}>
+                            </th>
+                            <th scope="col" class="text-success">
+                                <input type="lastname" name="last_name" class="form-control" id="lastname" width="50%" placeholder="Last Name" required autofocus value={{form.initial.last_name}}>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="text-primary">ROLL NO.: </th>
+                            <td colspan="2" class="text-success"><input type="rollno." name="roll_no" class="form-control" id="rollno" placeholder="Enter Roll No." required autofocus value={{form.initial.roll_no}}></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-primary">BRANCH: </th>
+                            <td colspan="2" class="text-success"><div class="btn-group dropright">
+                                <select name="branch" id="branch" class="form-control">
+                                    <option value="cse">CSE</option>
+                                    <option value="it">IT</option>
+                                    <option value="ee">EE</option>
+                                    <option value="ece">ECE</option>
+                                    <option value="ce">CE</option>
+                                    <option value="me">ME</option>
+                                    <option value="che">CHE</option>
+                                </select>
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-primary">YEAR: </th>
+                            <td colspan="2" class="text-success form-group"><div class="btn-group dropright">
+                                <select name="year" id="year" class="form-control">
+                                    <option value="1">I</option>
+                                    <option value="2">II</option>
+                                    <option value="3">III</option>
+                                    <option value="4">IV</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-primary">EMAIL ID: </th>
+                            <td colspan="2" class="text-success"><input type="email" name="email" class="form-control" id="email" placeholder="Enter Email" required autofocus value={{form.initial.email}}></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="font-weight: normal; font-size: medium;">
+                            {% for field in form %}
+                            <p>
+                                {% for error in field.errors %}
+                                <p style="color:red">
+                                    {{ error }}
+                                </p>
+                                {% endfor %}
+                            </p>
+                            {% endfor %}
+                            {% if form.non_field_errors %}
+                            <div>
+                                <p>
+                                    {{ form.non_field.errors }}
+                                </p>
+                            </div>
+                            {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <a href="{% url 'update_profile' %}" >
+                                    <input class="btn btn-outline-success btn-lg" style="font-weight: bold;" type="submit" value="Update">
+                                </a>
+                            </th>
+                            <td colspan="2">
+                                <a href="{% url 'profile' %}" style="float: right;">
+                                    <button type="button" class="btn btn-outline-danger btn-lg"><strong>Cancel</strong></button>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    var br = document.getElementById('branch');
+    
+    for( var i =0; i< br.options.length; i++){
+        
+        if (br.options[i].value == "{{form.initial.branch}}"){
+            br.options[i].selected = true;
+        }  
+    }
+    var yr = document.getElementById('year');
+    
+    for( var i =0; i< yr.options.length; i++){
+        
+        if (yr.options[i].value == "{{form.initial.year}}"){
+            yr.options[i].selected = true;
+        }  
+    }
+    
+</script>
+<script type="text/javascript">
+    function readURL(imageURL){
+        //todo
+    }
+
+    function enableImageOverlay(){
+        var textc = document.getElementById("idc_text")
+        textc.style.backgroundColor = "#0066ff"
+        textc.style.color = "white"
+        textc.style.fontSize = "16px"
+        textc.style.padding = "16px 32px"
+        textc.style.cursor = "pointer"
+        
+        var coverImage = document.getElementById("id_cover_image")
+        coverImage.style.opacity = "1"
+        coverImage.style.display = "block"
+        coverImage.style.width = "100%"
+        coverImage.style.height = "auto"
+        coverImage.style.transition = ".5s ease"
+        coverImage.style.backfaceVisibility = "hidden"
+        coverImage.style.cursor = "pointer"
+        
+        var middleContainerc = document.getElementById("idc_middle_container")
+        middleContainerc.style.transition = ".5s ease"
+        middleContainerc.style.opacity = "0"
+        middleContainerc.style.position = "absolute"
+        middleContainerc.style.top = "40%"
+        middleContainerc.style.left = "40%"
+        //middleContainer.style.transform = "translate(-50%,-50%)"
+        
+        var imageContainerc = document.getElementById("idc_image_container")
+        imageContainerc.addEventListener("mouseover",function(event){
+            coverImage.style.opacity = "0.3"
+            middleContainerc.style.opacity = "1"
+        })
+        
+        var imageContainerc = document.getElementById("idc_image_container")
+        imageContainerc.addEventListener("mouseout",function(event){
+            coverImage.style.opacity = "1"
+            middleContainerc.style.opacity = "0"
+        })
+        
+        var imageContainerc = document.getElementById("idc_image_container")
+        imageContainerc.addEventListener("click",function(event){
+            document.getElementById("id_cover_image").click()
+        })
+        
+        var cropConfirmc = document.getElementById("idc_image_crop_confirm")
+        cropConfirmc.classList.remove("d-flex")
+        cropConfirmc.classList.remove("flex-row")
+        cropConfirmc.classList.remove("justify-content-between")
+        cropConfirmc.classList.add("d-none")
+        
+    }
+    
+    function disableImageOverlay1(){
+        var coverImage = document.getElementById("id_cover_image_display")
+        var middleContainerc = document.getElementById("idc_middle_container")
+        var imageContainerc = document.getElementById("idc_image_container")
+        var textc = document.getElementById("idc_text")
+        
+        imageContainerc.removeEventListener("mouseover",function(event){
+            coverImage.style.opacity = "0.3"
+            middleContainerc.style.opacity = "1"
+        })
+        imageContainerc.removeEventListener("mouseout",function(event){
+            coverImage.style.opacity = "1"
+            middleContainerc.style.opacity = "0"
+        })
+        
+        coverImage.style.opacity = "1"
+        middleContainerc.style.opacity = "0"
+        textc.style.cursor = "pointer"
+        textc.style.opacity = "0"
+        
+        imageContainerc.removeEventListener("click",function(event){
+            //event.preventDefault()
+        })
+        document.getElementById("id_cover_image").addEventListener("click",function(event){
+            event.preventDefault()
+        })
+        
+        var cropConfirmc = document.getElementById("idc_image_crop_confirm")
+        cropConfirmc.classList.add("d-flex")
+        cropConfirmc.classList.add("flex-row")
+        cropConfirmc.classList.add("justify-content-between")
+        cropConfirmc.classList.remove("d-none")
+        
+        var confirmc = document.getElementById("idc_confirm")
+        confirmc.addEventListener("click",function(event){
+            cropImage(image, cropX, cropY, cropWidth, cropHeight)
+        })
+        
+        var cancelc = document.getElementById("idc_cancel")
+        cancelc.addEventListener("click",function(event){
+            console.log("reloading window...")
+            window.location.reload();
+        })
+    }
+</script>
+<script type="text/javascript">
+    var cropper;
+    var imageFile;
+    var base64ImageString;
+    var cropX;
+    var cropY;
+    var cropWidth;
+    var cropHeight;
+    
+    enableImageOverlay()
+    
+    function readURL(input){
+        if(input.files && input.files[0]){
+            var reader = new FileReader()
+            reader.onload = function(e){
+                disableImageOverlay()
+                var image = e.target.result
+                var imageField = document.getElementById("id_profile_image_display")
+                imageField.src = image
+                cropper = new Cropper(imageField,{
+                    aspectRatio : 1/1,
+                    crop(event){
+                        console.log("CROP START")
+                        console.log("x: " + event.detail.x)
+                        console.log("y: " + event.detail.y)
+                        console.log("width: " + event.detail.width)
+                        console.log("height: " + event.detail.height)
+                        setImageCropProperties(
+                                image,
+                                event.detail.x,
+                                event.detail.y,
+                                event.detail.width,
+                                event.detail.height
+                        )
+                    }
+                })
+            };
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    function setImageCropProperties(image,x,y,width,height){
+        imageFile = image
+        cropX = x
+        cropY = y
+        cropWidth = width
+        cropHeight = height
+    }
+    
+    function isImageSizeValid(image){
+        var startIndex = image.indexOf("base64,")+7
+        var base64str = image.substr(startIndex)
+        var decoded = atob(base64str)
+        if(decoded.length >= "{{DATA_UPLOAD_MAX_MEMORY_SIZE}}"){
+            return null
+        }
+        return base64str
+    }
+    
+    function cropImage(image, x, y, width, height){
+        base64ImageString = isImageSizeValid(image)
+        if(base64ImageString != null){
+            var requestData = {
+                "csrfmiddlewaretoken" : "{{csrf_token}}",
+                "image" : base64ImageString,
+                "cropX" : cropX,
+                "cropY" : cropY,
+                "cropWidth" : width,
+                "cropHeight" : height,
+            }
+            displayLoadingSpinner(true)
+            $.ajax({
+                type : "POST",
+                dataType : "json",
+                url : "{% url 'crop_image' %}",
+                data : requestData,
+                timeout : 10000,
+                success : function(data){
+                    if(data.result == "success"){
+                        document.getElementById("id_cancel").click()
+                    }
+                    else if(data.result == "error"){
+                        alert(data.exception)
+                        document.getElementById("id_cancel").click()
+                    }
+                },
+                error : function(data){
+                    console.error("ERROR...",data)
+                },
+                complete : function(data){
+                    displayLoadingSpinner(false) 
+                }
+            })
+        }
+        else{
+            alert("Upload an image smaller than 10MB!")
+            document.getElementById("id_cancel").click()
+        }    
+    }
+    
+    function enableImageOverlay(){
+        var text = document.getElementById("id_text")
+        text.style.backgroundColor = "#0066ff"
+        text.style.color = "white"
+        text.style.fontSize = "16px"
+        text.style.padding = "16px 32px"
+        text.style.cursor = "pointer"
+        
+        var profileImage = document.getElementById("id_profile_image")
+        profileImage.style.opacity = "1"
+        profileImage.style.display = "block"
+        profileImage.style.width = "100%"
+        profileImage.style.height = "auto"
+        profileImage.style.transition = ".5s ease"
+        profileImage.style.backfaceVisibility = "hidden"
+        profileImage.style.cursor = "pointer"
+        
+        var middleContainer = document.getElementById("id_middle_container")
+        middleContainer.style.transition = ".5s ease"
+        middleContainer.style.opacity = "0"
+        middleContainer.style.position = "absolute"
+        middleContainer.style.top = "40%"
+        middleContainer.style.left = "40%"
+        //middleContainer.style.transform = "translate(-50%,-50%)"
+        
+        var imageContainer = document.getElementById("id_image_container")
+        imageContainer.addEventListener("mouseover",function(event){
+            profileImage.style.opacity = "0.3"
+            middleContainer.style.opacity = "1"
+        })
+        
+        var imageContainer = document.getElementById("id_image_container")
+        imageContainer.addEventListener("mouseout",function(event){
+            profileImage.style.opacity = "1"
+            middleContainer.style.opacity = "0"
+        })
+        
+        var imageContainer = document.getElementById("id_image_container")
+        imageContainer.addEventListener("click",function(event){
+            document.getElementById("id_profile_image").click()
+        })
+        
+        var cropConfirm = document.getElementById("id_image_crop_confirm")
+        cropConfirm.classList.remove("d-flex")
+        cropConfirm.classList.remove("flex-row")
+        cropConfirm.classList.remove("justify-content-between")
+        cropConfirm.classList.add("d-none")
+        
+    }
+    
+    function disableImageOverlay(){
+        var profileImage = document.getElementById("id_profile_image_display")
+        var middleContainer = document.getElementById("id_middle_container")
+        var imageContainer = document.getElementById("id_image_container")
+        var text = document.getElementById("id_text")
+        
+        imageContainer.removeEventListener("mouseover",function(event){
+            profileImage.style.opacity = "0.3"
+            middleContainer.style.opacity = "1"
+        })
+        imageContainer.removeEventListener("mouseout",function(event){
+            profileImage.style.opacity = "1"
+            middleContainer.style.opacity = "0"
+        })
+        
+        profileImage.style.opacity = "1"
+        middleContainer.style.opacity = "0"
+        text.style.cursor = "pointer"
+        text.style.opacity = "0"
+        
+        imageContainer.removeEventListener("click",function(event){
+            //event.preventDefault()
+        })
+        document.getElementById("id_profile_image").addEventListener("click",function(event){
+            event.preventDefault()
+        })
+        
+        var cropConfirm = document.getElementById("id_image_crop_confirm")
+        cropConfirm.classList.add("d-flex")
+        cropConfirm.classList.add("flex-row")
+        cropConfirm.classList.add("justify-content-between")
+        cropConfirm.classList.remove("d-none")
+        
+        var confirm = document.getElementById("id_confirm")
+        confirm.addEventListener("click",function(event){
+            cropImage(imageFile, cropX, cropY, cropWidth, cropHeight)
+        })
+        
+        var cancel = document.getElementById("id_cancel")
+        cancel.addEventListener("click",function(event){
+            console.log("reloading window...")
+            window.location.reload();
+        })
+    }
+    
+</script>
+
+
+        
+{% endblock %}

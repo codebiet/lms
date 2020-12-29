@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth import get_user_model
 from multiselectfield import MultiSelectField
 import datetime
+from lms import settings 
 
 
 class MyAccountManager(BaseUserManager):
@@ -39,13 +40,13 @@ def get_profile_image_filepath(self, fn):
     return f'profile_images/{self.pk}/{"profile_image.png"}'
 
 def get_default_profile_image():
-    return "/default_img.jpg"
+    return f"{settings.STATIC_ROOT}/main/img/default_img.jpg"
 
 def get_cover_image_filepath(self, fn):
     return f'cover_images/{self.pk}/{"cover_image.png"}'
 
 def get_default_cover_image():
-    return "/default_cover.jpg"
+    return f"{settings.STATIC_ROOT}/main/img/default_cover.jpg"
 
 class Account(AbstractBaseUser):
 

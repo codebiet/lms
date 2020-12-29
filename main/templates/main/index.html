@@ -37,10 +37,10 @@
                     Hello, {{request.user.first_name}}
                 </a>
                 <div class="dropdown-menu" id="dropdown" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" style='color:#2d3436 ;' href="{% url 'issued_books' %}">Issued Books</a>
-                    <a class="dropdown-item" style='color:#2d3436 ;' href="{% url 'upload_pdf' %}">Upload PDF</a>
+                    <a class="dropdown-item" href="{% url 'issued_books' %}">Issued Books</a>
+                    <a class="dropdown-item" href="{% url 'upload_pdf' %}">Upload PDF</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" style='color:#2d3436 ;' href="{% url 'profile' %}">Profile</a>
+                    <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
                 </div>
             </li>
             

@@ -30,7 +30,16 @@ html {
     transition: 0.2s;
 }
 
+.dropdown-item {
+    color: royalblue;
+}
 
+.dropdown-item:hover {
+    color: white;
+    background-color: royalblue;
+    opacity: 0.8;
+    transition: 0.2s;
+}
 
 
 .footer {

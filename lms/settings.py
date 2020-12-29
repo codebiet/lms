@@ -25,6 +25,13 @@ SECRET_KEY = 'mv!ukh^=ts9%p#_y7bb&^5c(o18kesj%=8vd8nbl*dwrl50w%4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_URL_TLS = True
+EMAIL_HOST_USER = 'shashank27kr@gmail.com'
+EMAIL_HOST_PASSWORD = 'skggames'
+
 ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'account.Account'
@@ -60,7 +67,7 @@ ROOT_URLCONF = 'lms.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(os.path.join(os.path.join(BASE_DIR,'main'),'templates'),'main'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,3 +131,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(os.path.join(BASE_DIR,'main'),'static')
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760 # 10 * 1024 * 1024 (10 MB)
+
+TEMP = os.path.join(os.path.join(BASE_DIR, 'media'), 'profile_images')

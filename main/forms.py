@@ -53,3 +53,24 @@ class UploadPdfForm(forms.ModelForm):
     class Meta:
         model = pdf
         fields = '__all__'
+
+class UpdateUserForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ('first_name', 'last_name', 'email', 'roll_no', 'branch', 'year')
+
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+        try:
+            account = Account.objects.exclude(pk=self.instance.pk).get(email=email)
+        except Account.DoesNotExist:
+            return email
+        raise forms.ValidationError(f'Email {email} is already in use.')
+
+    def save(self, commit=True):
+        user = super(UpdateUserForm, self).save(commit = False)
+        user.email = self.cleaned_data['email']
+        
+        if commit:
+            user.save()
+        return user

@@ -3,31 +3,57 @@
 
 {% block title %}Books{% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'main\style.css' %}">
+
+    <style>
+        body{
+            background-color:#E6E6FA;
+            font-family:"Comic Sans MS", cursive, sans-serif;
+            
+            --stripe: #cfd8dc;
+            --bg: #e1e1e1;
+
+            background: linear-gradient(135deg, var(--bg) 25%, transparent 25%) -50px 0,
+                linear-gradient(225deg, var(--bg) 25%, transparent 25%) -50px 0,
+                linear-gradient(315deg, var(--bg) 25%, transparent 25%),
+                linear-gradient(45deg, var(--bg) 25%, transparent 25%);
+            background-size: 100px 100px;
+            background-color: var(--stripe);
+            
+            
+            
+        }
+    </style>
+
+{% endblock %}
+
 {% block main-content %}
 <center>
-    <h1 class = "py-2" style="color:#2d3436; background-color:lightgray">Welcome To Books Panel</h1>
+    <h1 class = "py-2 shadow-lg card-title" style="color:#2d3436; background-color:lightgray;">Welcome To Books Panel</h1>
 </center>
 
-<div>
-    <p><h3 style="color:#2d3436; background-color:#ffffff;">Recommended></h3></p>
-</div>
 
 
 
-<div class="container">
+<div class="container my-5">
     <div class="row">
-
+        {% for r in repeat %}
         {% for bk in page_obj %}
         
         <div class="col-lg-3 col-md-6 col-xl-2" style="text-align: center;">
-            <a href="{% url 'book' bk.id %}" style="text-decoration: none; color:#2d3436;">
-                <img src="{{bk.image.url}}" height="150" width="160" alt="{{bk.name}}" title="{{bk.name}}"/>
-                <h5>{{bk.name}}</h5>
-                <h6>{{bk.author}}</h6>
+            <a href="{% url 'book' bk.id %}" style="text-decoration: none; color:#2d3436;" class="stretched-link">
+                <div class="card shadow my-3">
+                    <img src="{{bk.image.url}}" class="card-img-top img-responsive img-rounded grid-gutter-width" height="150" width="160" alt="{{bk.name}}" title="{{bk.name}}"/>
+                    <div class="card-body">
+                        <h5 class="card-title">{{bk.name}}</h5>
+                        <h6 class="card-text">{{bk.author}}</h6>
+                    </div>
+                </div>
             </a>
         </div>
         
-        
+        {% endfor %}
         {% endfor %}
 
     </div>
